@@ -19,11 +19,11 @@ inThisBuild(
 
 lazy val loggingSettings = Seq(
   libraryDependencies ++= Seq(
-    "ch.qos.logback" % "logback-classic" % "1.3.5",
+    "ch.qos.logback" % "logback-classic" % "1.3.7",
     "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
   ),
   // Drop and replace commons-logging with slf4j
-  libraryDependencies += "org.slf4j" % "jcl-over-slf4j" % "1.7.36",
+  libraryDependencies += "org.slf4j" % "jcl-over-slf4j" % "2.0.7",
   excludeDependencies += ExclusionRule("commons-logging", "commons-logging")
 )
 
@@ -66,12 +66,11 @@ lazy val infra = project
     loggingSettings,
     libraryDependencies ++= Seq(
       "com.sksamuel.elastic4s" %% "elastic4s-client-esjava" % V.elastic4sVersion,
-      "org.json4s" %% "json4s-native" % V.json4s,
       "org.flywaydb" % "flyway-core" % "8.5.13", // for database migration
       "com.typesafe.akka" %% "akka-stream" % V.akkaVersion,
       "com.typesafe.akka" %% "akka-http" % V.akkaHttpVersion,
       "de.heikoseeberger" %% "akka-http-circe" % "1.39.2",
-      "io.get-coursier" %% "coursier" % "2.1.0-RC2",
+      "io.get-coursier" %% "coursier" % "2.1.4",
       "org.tpolecat" %% "doobie-scalatest" % V.doobieVersion % Test,
       "org.scalatest" %% "scalatest" % V.scalatest % "test,it"
     ) ++ Seq(
@@ -136,7 +135,7 @@ lazy val webclient = project
     scalacOptions += "-Wunused:imports",
     libraryDependencies ++= Seq(
       "com.lihaoyi" %%% "scalatags" % "0.11.1",
-      "org.endpoints4s" %%% "fetch-client" % "3.0.0"
+      "org.endpoints4s" %%% "fetch-client" % "3.1.0"
     )
   )
   .enablePlugins(ScalaJSPlugin)
@@ -167,18 +166,18 @@ lazy val server = project
       "com.typesafe.akka" %% "akka-actor-typed" % V.akkaVersion,
       "com.typesafe.akka" %% "akka-stream-testkit" % V.akkaVersion % Test,
       "com.typesafe.akka" %% "akka-http-testkit" % V.akkaHttpVersion % Test,
-      "ch.megard" %% "akka-http-cors" % "1.1.3",
+      "ch.megard" %% "akka-http-cors" % "1.2.0",
       "com.softwaremill.akka-http-session" %% "core" % "0.7.0",
       "com.typesafe.akka" %% "akka-http" % V.akkaHttpVersion,
-      "org.endpoints4s" %% "akka-http-server" % "7.1.0",
+      "org.endpoints4s" %% "akka-http-server" % "7.2.0",
       "org.webjars" % "bootstrap-sass" % "3.4.1",
       "org.webjars" % "bootstrap-switch" % "3.3.4",
       "org.webjars" % "bootstrap-select" % "1.13.18",
       "org.webjars" % "chartjs" % "3.9.1",
-      "org.webjars.npm" % "date-fns" % "2.29.3",
+      "org.webjars.npm" % "date-fns" % "2.30.0",
       "org.webjars.npm" % "chartjs-adapter-date-fns" % "2.0.0",
-      "org.webjars" % "font-awesome" % "6.2.0",
-      "org.webjars" % "jquery" % "3.6.1",
+      "org.webjars" % "font-awesome" % "6.4.0",
+      "org.webjars" % "jquery" % "3.6.3",
       "org.webjars.bower" % "select2" % "4.0.13"
     ),
     Compile / unmanagedResourceDirectories += (Assets / WebKeys.public).value,
@@ -202,10 +201,10 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
       "com.lihaoyi" %%% "fastparse" % "2.3.3",
       "io.github.cquiroz" %%% "scala-java-time" % "2.4.0",
       "com.typesafe.play" %%% "play-json" % V.playJsonVersion,
-      "org.endpoints4s" %%% "algebra" % "1.9.0",
-      "org.endpoints4s" %% "json-schema-playjson" % "1.9.0" % Test,
+      "org.endpoints4s" %%% "algebra" % "1.10.0",
+      "org.endpoints4s" %% "json-schema-playjson" % "1.10.0" % Test,
       "org.scalatest" %%% "scalatest" % V.scalatest % Test,
-      "org.jsoup" % "jsoup" % "1.15.3"
+      "org.jsoup" % "jsoup" % "1.16.1"
     ) ++ Seq(
       "io.circe" %%% "circe-core",
       "io.circe" %%% "circe-generic",
@@ -224,11 +223,10 @@ lazy val data = project
       "com.typesafe.akka" %% "akka-actor-typed" % V.akkaVersion,
       "com.typesafe.akka" %% "akka-serialization-jackson" % V.akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % V.akkaVersion,
-      "org.apache.maven" % "maven-model-builder" % "3.8.6",
-      "org.jsoup" % "jsoup" % "1.15.3",
+      "org.apache.maven" % "maven-model-builder" % "3.9.2",
+      "org.jsoup" % "jsoup" % "1.16.1",
       "org.apache.ivy" % "ivy" % "2.5.1",
       "com.typesafe.akka" %% "akka-http" % V.akkaHttpVersion,
-      "de.heikoseeberger" %% "akka-http-json4s" % "1.39.2",
       "org.json4s" %% "json4s-native" % V.json4s,
       "org.scalatest" %% "scalatest" % V.scalatest % Test
     ),
@@ -241,12 +239,12 @@ lazy val data = project
 
 lazy val V = new {
   val doobieVersion = "0.13.4"
-  val playJsonVersion = "2.9.3"
+  val playJsonVersion = "2.9.4"
   val akkaVersion = "2.6.18"
   val akkaHttpVersion = "10.2.10"
-  val elastic4sVersion = "8.4.4"
+  val elastic4sVersion = "8.7.0"
   val nscalaTimeVersion = "2.32.0"
-  val scalatest = "3.2.14"
-  val circeVersion = "0.14.3"
+  val scalatest = "3.2.16"
+  val circeVersion = "0.14.5"
   val json4s = "4.0.6"
 }
